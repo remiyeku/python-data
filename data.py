@@ -1,5 +1,7 @@
-# Setup ETL operations
-    # Build e2e data pipeline
+# Setup ETL operations?
+    # Build e2e data pipeline?
+    # ^^^^^^ Download files for years after 2015 in files
+    # Join the files 
 # Find the average FE (Fuel Economy, MPG) (combined, city, motorway) based on manufacturer
     # Who is top
     # Who is bottom
@@ -47,11 +49,12 @@ print(S[0:3, 0:2, 1:3])
 
 # What is the mean/median distribution of Combined FE
 
-sMean = df_copy.groupby(by=['Carline'])['Combined FE'].mean().sort_values(ascending=False)
-sMedian = df_copy.groupby(by=['Carline'])['Combined FE'].median().sort_values(ascending=False)
+FEMean = df_copy.groupby(by=['Carline'])['Combined FE'].mean().sort_values(ascending=False)
+FEMedian = df_copy.groupby(by=['Carline'])['Combined FE'].median().sort_values(ascending=False)
+
 plt.subplots(figsize=(10, 8))
-plt.plot(sMean.values, label='mean')
-plt.plot(sMedian.values, label='median')
+plt.plot(FEMean.values, label='mean')
+plt.plot(FEMedian.values, label='median')
 plt.xlabel('Car Model')
 plt.ylabel('Combined FE (MPG)')
 plt.title('Mean and Median FE per Car Line')
@@ -60,5 +63,19 @@ plt.show()
 
 # Compute the number of mean/median combined FE over 25mpg
 
-print('Percentage of mean combined FE greater than or equal to 25.0: {}'.format(sMean[sMean >= 25.0].shape[0]/sMean.shape[0]))
-print('Percentage of median combined FE greater than or equal to 25.0: {}'.format(sMedian[sMedian >= 25.0].shape[0]/sMedian.shape[0]))
+print('Percentage of mean combined FE greater than or equal to 25.0: {}'.format(FEMean[FEMean >= 25.0].shape[0]/FEMean.shape[0]))
+print('Percentage of median combined FE greater than or equal to 25.0: {}'.format(FEMedian[FEMedian >= 25.0].shape[0]/FEMedian.shape[0]))
+
+
+# Find the average FE (Fuel Economy, MPG) (combined, city, motorway) based on manufacturer
+
+FEmanmean = df_copy.groupby(by=['Mfr Name'])['Combined FE'].mean().sort_values(ascending=False)
+FEmanmedian = df_copy.groupby(by=['Mfr Name'])['Combined FE'].median().sort_values(ascending=False)
+
+print(FEmanmean)
+plt.bar(df_copy.groupby(by=['Mfr Name']), FEmanmedian, color = 'red')
+plt.xlabel('Car Manufacturer')
+plt.ylabel('Combined FE Avg (MPG)')
+plt.title('Mean and Median FE per Car Manufacturer')
+plt.legend()
+plt.show()
